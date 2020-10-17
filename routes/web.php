@@ -5,6 +5,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 
 /*
@@ -34,20 +35,15 @@ Route::post('/',function() {
      * 4:Message de success
      */
 
-     //1
-     
+    Validator::make($data, $rules);
 
-     //2
-    $url = Url::whereUrl(request('url'))->first(); // on select dans la table urls le shortener de l'url ici crée 
 
-    if($url) {                                     // si le shortener existe alors on renvoi le lien déjà crée dans la table..
+    $url = Url::whereUrl(request('url'))->first(); 
+    if($url) {                                     
         return view('result')->with('shortened', $url->shortened  ); 
-        // revient a faire: return view('result')->withShortened($url->shortened );
-        
     }
     
-    //3
-    $row = Url::create([            //On insert dans la BDD une nouvelle entrée shortened
+    $row = Url::create([           
         'url' => request('url'),
         'shortened' => Url::getUniqueShortUrl(),
     ]);
