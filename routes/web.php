@@ -25,17 +25,16 @@ Route::get('/', function () {
 
 Route::post('/',function() {  
     $url = request('url');
-    /**
-     * 1:valider l'url
-     * 
-     * 2:Verifier si l'url a deja ete raccourci et le retourner si c'est le cas 
-     * 
-     * 3:creer une nouvelle short url et la retourner 
-     * 
-     * 4:Message de success
-     */
 
-    Validator::make($data, $rules);
+    $data = ['url' => $url];
+
+    $validation = Validator::make(compact('url'), ['url' => 'required|url'])->validate();
+
+    if($validation->fails()){
+        dd('FAILED');
+    } else {
+        dd('SUCCESS');
+    }
 
 
     $record = Url::whereUrl($url)->first(); 
