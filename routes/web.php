@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Url;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -33,15 +34,31 @@ Route::post('/',function() {
      * 4:Message de success
      */
 
-     //2
-    $url = Url::whereUrl(request('url'))->first();
+     //1
+     
 
-    if($url) {
+     //2
+    $url = Url::whereUrl(request('url'))->first(); // on select dans la table urls le shortener de l'url ici crée 
+
+    if($url) {                                     // si le shortener existe alors on renvoi le lien déjà crée dans la table..
         return view('result')->with('shortened', $url->shortened  ); 
         // revient a faire: return view('result')->withShortened($url->shortened );
         
     }
+    
+    //3
+    $row = Url::create([            //On insert dans la BDD une nouvelle entrée shortened
+        'url' => request('url'),
+        'shortened' => Url::getUniqueShortUrl(),
+    ]);
+
+    if($row) {
+        return view('result')->withShortened($row->shortened  ); 
+    }else{
+        return view('error');
+    }
 });
+
 
 Route::get('/{shortened}', function ($shortened) {
     $url = Url::whereShortened($shortened)->first();
