@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>URL SHorteNERD</title>
-    <style>
-        .error-msg{
-            color: red;
-            font-style: italic;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
 </head>
 <body>
-    @yield('content')
+    <div class="wrapper">
+        @yield('content')
+    </div>
+    
 </body>
 </html>

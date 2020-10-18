@@ -1,0 +1,29 @@
+.error-msg{
+    color: rgba(11, 223, 187, 0.808);
+    font-style: italic;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+body{
+    background-color: rgb(97, 93, 93);
+    color: #fff;
+}
+.wrapper{
+    width: 680px;
+    margin: 0 auto;
+    padding-top: 8em;
+    text-align: center;
+}
+input[type="text"]{
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    padding: 1em 0.5em
+}
+a {
+    color: rgb(109, 255, 194);
+}
+h1 {
+    font-size: 2.5em;
+}
