@@ -35,7 +35,7 @@ Route::post('/',function() {
 
     $record = Url::whereUrl($url)->first(); 
     if($record) {                                     
-        return view('result')->with('shortened', $url->shortened  ); 
+        return view('result')->with('shortened', $record->shortened  ); 
     }
     
     $row = Url::create([           
