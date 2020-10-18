@@ -30,9 +30,7 @@ Route::post('/',function() {
 
     Validator::make(
         compact('url'), 
-        ['url' => 'required|url'],
-        ['url.required' => 'vous devez fournir une URL...',
-        'url.url' => 'URL invalide!']
+        ['url' => 'required|url']
     )->validate();
 
     $record = Url::whereUrl($url)->first(); 
