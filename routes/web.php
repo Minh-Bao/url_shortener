@@ -28,14 +28,12 @@ Route::post('/',function() {
 
     $data = ['url' => $url];
 
-    $validation = Validator::make(compact('url'), ['url' => 'required|url'])->validate();
-
-    if($validation->fails()){
-        dd('FAILED');
-    } else {
-        dd('SUCCESS');
-    }
-
+    Validator::make(
+        compact('url'), 
+        ['url' => 'required|url'],
+        ['url.required' => 'vous devez fournir une URL...',
+        'url.url' => 'URL invalide!']
+    )->validate();
 
     $record = Url::whereUrl($url)->first(); 
     if($record) {                                     
