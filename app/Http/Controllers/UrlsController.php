@@ -13,15 +13,12 @@ class UrlsController extends Controller
         return view('welcome');
     }
 
-    public function store() {
-        $url = request('url');
+    public function store(Request $request) {
+        $url = $request->url;
 
         $data = ['url' => $url];
 
-        Validator::make(
-            compact('url'), 
-            ['url' => 'required|url']
-        )->validate();
+        $this->validate($request, ['url' => 'required|url']);
 
         $record = Url::whereUrl($url)->first(); 
         if($record) {                                     
