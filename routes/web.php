@@ -4,6 +4,7 @@ use App\Models\Url;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\UrlsController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,44 +20,9 @@ use Illuminate\Support\Facades\Validator;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'App\Http\Controllers\UrlsController@create');
 
-Route::post('/',function() {  
-    $url = request('url');
+Route::post('/', 'App\Http\Controllers\UrlsController@store');
 
-    $data = ['url' => $url];
-
-    Validator::make(
-        compact('url'), 
-        ['url' => 'required|url']
-    )->validate();
-
-    $record = Url::whereUrl($url)->first(); 
-    if($record) {                                     
-        return view('result')->with('shortened', $record->shortened  ); 
-    }
-    
-    $row = Url::create([           
-        'url' => $url,
-        'shortened' => Url::getUniqueShortUrl(),
-    ]);
-
-    if($row) {
-        return view('result')->withShortened($row->shortened  ); 
-    }else{
-        return view('error');
-    }
-});
-
-
-Route::get('/{shortened}', function ($shortened) {
-    $url = Url::whereShortened($shortened)->first();
-
-    if(! $url){
-        return Redirect::to('/');
-    }
-
-    return Redirect::to($url->url);
-});    
+Route::get('/{shortened}', 'App\Http\Controllers\UrlsController@show');
+ 
