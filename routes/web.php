@@ -1,13 +1,6 @@
 <?php
 
-use App\Models\Url;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Request;
-use App\Http\Controllers\UrlsController;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
-
 
 /*
 |--------------------------------------------------------------------------
