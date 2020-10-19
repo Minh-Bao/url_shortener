@@ -22,7 +22,7 @@ class UrlsController extends Controller
     }
 
     public function show($shortened) {
-        $url = Url::whereShortened($shortened)->first();
+        $url = Url::whereShortened($shortened)->firstOrFail();
 
         if(! $url){
             return Redirect::to('/');
@@ -32,23 +32,10 @@ class UrlsController extends Controller
     }
 
     private function getRecordForUrl($url) {
-        $record = Url::whereUrl($url)->first(); 
 
-        if($record) {                                     
-            return $record; 
-        }
-        
-        return Url::create([           
-            'url' => $url,
-            'shortened' => Url::getUniqueShortUrl(),
-        ]);
-
-        /*
-        if($row) {
-            return view('result')->withShortened($row->shortened  ); 
-        }else{
-            return view('error');
-        }
-        */
+        return Url::firstOrCreate(
+            ['url' => $url],
+            ['shortened' => Url::getUniqueShortUrl()]
+        );
     }
 }
